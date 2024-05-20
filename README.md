@@ -1,2 +1,2 @@
 # MManalysis
-Repot for MM academic market analysis
+Repo for MM academic market analysis
