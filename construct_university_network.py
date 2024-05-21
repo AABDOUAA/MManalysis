@@ -1,4 +1,4 @@
-def construct_university_network(existing_network, ClassDictionary):
+def construct_university_network(existing_network, classDictionary):
     # Function to construct the university-level network from the existing network
 
     # Initialize an empty dictionary to store university-level connectivity
