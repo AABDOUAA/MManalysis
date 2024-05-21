@@ -1,3 +1,5 @@
+import pandas as pd
+
 def uniCollabs(basedf, uniName):
 
   substring = uniName
