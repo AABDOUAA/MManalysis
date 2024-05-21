@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import networkx as nx
+import pandas as pd
+
 def create_network_data_structure_from_strings(input_strings, network=None, edge_counts=None):
     if network is None:
         network = {}  # Initialize an empty graph (adjacency list representation)
@@ -61,9 +65,6 @@ def print_search_results(search_results):
 # keyword_to_search = "ucl"  # Example keyword to search
 # search_results = search_nodes(filtered_network, keyword_to_search)
 # print_search_results(search_results)
-
-import matplotlib.pyplot as plt
-import networkx as nx
 
 def plot_network_for_nodes_with_connections(network, num_connections):
     # Create a NetworkX graph from the network dictionary
