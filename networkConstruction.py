@@ -1,3 +1,45 @@
+def create_network_data_structure_from_strings(input_strings, network=None, edge_counts=None):
+    if network is None:
+        network = {}  # Initialize an empty graph (adjacency list representation)
+    if edge_counts is None:
+        edge_counts = {}  # Initialize an empty dictionary to store edge counts
+
+    for input_string in input_strings:
+        # Split the input string using semicolons while conserving everything between semicolons
+        split_list = [elem.strip() for elem in input_string.split(';')]
+        # Apply the algorithm to update the fully-connected network data structure
+        network, edge_counts = update_fully_connected_network(split_list, network, edge_counts)
+
+    return network, edge_counts
+
+def update_fully_connected_network(elements, network, edge_counts):
+    # Connect every pair of elements together
+    for i in range(len(elements)):
+        for j in range(i+1, len(elements)):
+            item1 = elements[i]
+            item2 = elements[j]
+            # Add edge between item1 and item2
+            if item1 not in network:
+                network[item1] = set()
+            if item2 not in network:
+                network[item2] = set()
+            network[item1].add(item2)
+            network[item2].add(item1)  # Undirected graph, so add edges in both directions
+
+            # Update edge count
+            edge = (item1, item2)
+            edge_counts[edge] = edge_counts.get(edge, 0) + 1
+
+    return network, edge_counts
+
+# Example usage:
+# input_strings = listCollabs
+# network_data_structure, edge_counts = create_network_data_structure_from_strings(input_strings)
+# print("Network data structure:")
+# print(network_data_structure)
+# print("Edge counts:")
+# print(edge_counts)
+
 def search_nodes(network, keyword):
     matches = []
     for node, neighbors in network.items():
