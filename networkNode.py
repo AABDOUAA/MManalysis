@@ -18,7 +18,7 @@ class networkNode:
     def findUni(self):
         affiliationName = self.name
         splitName = affiliationName.split(',')
-        search_strings = ["University", "College", "School"]
+        search_strings = ["University", "College"]
         location = self.find_locations(splitName, search_strings)
         if location[0] == 0 and len(splitName) == 1:
             location2 = 0
