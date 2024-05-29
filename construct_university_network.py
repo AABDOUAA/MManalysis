@@ -22,3 +22,16 @@ def construct_university_network(existing_network, classDictionary):
                 university_network[university].add(connected_university)
 
     return university_network
+
+
+def count_sections(strings_list):
+    sections_count = []
+    for s in strings_list:
+        sections = s.split(',')
+        sections_count.append(len(sections))
+    return sections_count
+
+def create_dataframe_from_lists(column_names, list1, list2):
+    data = list(zip(list1, list2))
+    df = pd.DataFrame(data, columns=column_names)
+    return df
