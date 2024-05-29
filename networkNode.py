@@ -32,6 +32,10 @@ class networkNode:
         else:
           location2 = location[0] - 1
           location3 = location2 - 1
+        # currently this is where the pattern logic is implemented
+        # it is based on the position of the matched string
+        # within the compelte name
+
 
         return splitName[location[0]].lstrip(), splitName[location2].lstrip(), splitName[location3].lstrip()
 
