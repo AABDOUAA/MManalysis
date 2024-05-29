@@ -156,6 +156,30 @@ def inspect_network(network):
 # print("Number of nodes:", num_nodes)
 # print("Number of edges:", num_edges)
 
+def analyze_network(network, subgraph_nodes=None):
+    if subgraph_nodes is None:
+        subgraph_nodes = network.keys()
+
+    # Number of nodes is the number of subgraph nodes
+    num_nodes = len(subgraph_nodes)
+
+    # To count the number of edges
+    num_edges = 0
+    seen_edges = set()  # To avoid double counting edges in an undirected graph
+
+    for node in subgraph_nodes:
+        if node in network:
+            connections = network[node]
+            for connected_node in connections:
+                if connected_node in subgraph_nodes:
+                    # Use a frozenset to represent the edge to avoid counting the same edge twice
+                    edge = frozenset([node, connected_node])
+                    if edge not in seen_edges:
+                        seen_edges.add(edge)
+                        num_edges += 1
+
+    return num_nodes, num_edges
+
 def plot_clustered_network(network):
     G = nx.Graph(network)
 
@@ -220,4 +244,74 @@ def filter_network_by_keyword(network, edge_counts, keyword):
 # print("\nFiltered Edge Counts:")
 # print(filtered_edge_counts)
 
+def remove_node(network, node_to_remove):
+    # Remove the node from the dictionary if it exists
+    if node_to_remove in network:
+        del network[node_to_remove]
 
+    # Iterate over all remaining nodes in the network
+    for key, value in network.items():
+        # Remove references to the node_to_remove from adjacency lists
+        if node_to_remove in value:
+            value.remove(node_to_remove)
+
+def extract_subnetwork(network, target_university):
+    # Check if the target university is in the network
+    if target_university not in network:
+        return {}
+
+    # Get the direct connections of the target university
+    direct_connections = network[target_university]
+
+    # Create the sub-network
+    subnetwork = {target_university: direct_connections}
+
+    # Add the connections of the direct connections
+    for university in direct_connections:
+        if university in network:
+            subnetwork[university] = network[university]
+
+    return subnetwork
+
+def complete_network_fun(network):
+    # Create a set to collect all nodes
+    all_nodes = set(network.keys())
+    for connections in network.values():
+        all_nodes.update(connections)
+
+    # Ensure all nodes are keys in the network dictionary
+    for node in all_nodes:
+        if node not in network:
+            network[node] = []
+
+    return network
+
+def match_dict_values(dict1, dict2):
+    matched_dict = {}
+
+    for key in dict1.keys():
+      if key in dict2.keys():
+          matched_dict[key] = dict2[key]
+      else:
+          matched_dict[key] = None
+
+    node_labels = {item: item for item in list(dict1)}
+
+    return matched_dict, node_labels
+
+def remove_nodes_from_topology(topology, nodes_to_remove):
+    # Iterate over the dictionary keys (nodes) and values (neighbors)
+    for node, neighbors in list(topology.items()):
+        # Check if the current node is in the nodes_to_remove list
+        if node in nodes_to_remove:
+            # Remove the node from the dictionary
+            del topology[node]
+        else:
+            # Remove the nodes to remove from the list of neighbors
+            topology[node] = [neighbor for neighbor in neighbors if neighbor not in nodes_to_remove]
+            # Remove any empty neighbor lists
+            if not topology[node]:
+                del topology[node]
+        # Remove references to the removed nodes in the neighbor lists
+        for neighbor, neighbors_of_neighbor in topology.items():
+            topology[neighbor] = [n for n in neighbors_of_neighbor if n not in nodes_to_remove]
