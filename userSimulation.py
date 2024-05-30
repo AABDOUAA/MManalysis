@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import datetime
+import networkx as nx
 
 # Function to update user numbers in universities
 def update_user_numbers(G, universities, growth_params, timestep):
