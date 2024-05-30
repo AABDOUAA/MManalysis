@@ -1,3 +1,5 @@
+import pandas as pd
+
 def construct_university_network(existing_network, classDictionary):
     # Function to construct the university-level network from the existing network
 
