@@ -315,3 +315,41 @@ def remove_nodes_from_topology(topology, nodes_to_remove):
         # Remove references to the removed nodes in the neighbor lists
         for neighbor, neighbors_of_neighbor in topology.items():
             topology[neighbor] = [n for n in neighbors_of_neighbor if n not in nodes_to_remove]
+
+def combine_nodes(network_dict, nodes_to_combine):
+    # Create a NetworkX graph from the dictionary
+    G = nx.Graph()
+    for node, neighbors in network_dict.items():
+        for neighbor in neighbors:
+            G.add_edge(node, neighbor)
+
+    # Combine nodes
+    for group in nodes_to_combine:
+        new_node = next(iter(group)).upper()  
+                                      # Name the new node by concatenating old node names
+                                      # for this to work the new_node needs a new name
+                                      # otherwise when the algorithm checks if its already in
+                                      # the network it will return true
+        for node in group:
+            if node in G:
+                # Add edges from the new node to the neighbors of the old nodes
+                for neighbor in list(G.neighbors(node)):
+                    if neighbor not in group:
+                        G.add_edge(new_node, neighbor)
+                G.remove_node(node)  # Remove the old node
+
+    # Convert back to dictionary format
+    new_network_dict = {node: list(G.neighbors(node)) for node in G.nodes()}
+
+    return new_network_dict
+
+def lowercase_dict(input_dict):
+    def lowercase_value(value):
+        if isinstance(value, str):
+            return value.lower()
+        elif isinstance(value, list):
+            return [lowercase_value(item) for item in value]
+        else:
+            return value
+
+    return {key.lower(): lowercase_value(value) for key, value in input_dict.items()}
