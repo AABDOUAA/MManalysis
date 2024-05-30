@@ -47,7 +47,6 @@ def dfCollabs(basedf, uniName):
 # perhaps it would also be useful to capture titles at this stage (originally basedf was dfA - which is the originally read csv)
 
 def pubCollabs(basedf, uniName):
-  basedf = dfA
   substring = 'University of Leeds'
 
   basedf = basedf[basedf['Affiliations'].str.contains(substring)]
