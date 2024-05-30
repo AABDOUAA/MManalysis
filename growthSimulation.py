@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import datetime
+
 # Function to initialize the network
 def my_initialize_network(final_uni_network, popDictionary, probDictionary):
     # Initialize university populations and connections
