@@ -45,3 +45,18 @@ def dfCollabs(basedf, uniName):
 # this returns a datframe of the set of collaborations that a university has been involved in within the dataset
 # each having an occurence of 1 - ie this is the unpacked form of the previous function
 # perhaps it would also be useful to capture titles at this stage (originally basedf was dfA - which is the originally read csv)
+
+def pubCollabs(basedf, uniName):
+  basedf = dfA
+  substring = 'University of Leeds'
+
+  basedf = basedf[basedf['Affiliations'].str.contains(substring)]
+
+  collabList = basedf['Affiliations'].value_counts()
+  uniList = basedf['Affiliations'].str.split(';')
+
+  a = collabList.to_numpy()
+  title = basedf['Title']
+  dfCollabs = pd.DataFrame({'Institutions': collabList.keys(), 'Occurences': a, 'Title': title})
+  return dfCollabs
+
