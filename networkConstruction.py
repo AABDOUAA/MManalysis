@@ -325,8 +325,8 @@ def combine_nodes(network_dict, nodes_to_combine):
 
     # Combine nodes
     for group in nodes_to_combine:
-        new_node = list(group)[1]
-        #next(iter(group)).upper() 
+        new_node = list(group)[1].upper()
+        G.add_node(new_node) 
                                       # Name the new node by concatenating old node names
                                       # for this to work the new_node needs a new name
                                       # otherwise when the algorithm checks if its already in
