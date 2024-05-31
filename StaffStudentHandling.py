@@ -30,12 +30,12 @@ def matchNetworkUniToHEP(network, dataFrame):
 
   return dfNames
 
-  def create_sets_of_shared_objects(df, object_col='Uni', value_col='Matched HEP'):
-    # Group by the associated value and create sets of objects
-    grouped_sets = df.groupby(value_col)[object_col].apply(set)
+def create_sets_of_shared_objects(df, object_col='Uni', value_col='Matched HEP'):
+  # Group by the associated value and create sets of objects
+  grouped_sets = df.groupby(value_col)[object_col].apply(set)
 
-    # Convert to list of sets
-    list_of_sets = grouped_sets.tolist()
+  # Convert to list of sets
+  list_of_sets = grouped_sets.tolist()
 
-    return list_of_sets
+  return list_of_sets
 
