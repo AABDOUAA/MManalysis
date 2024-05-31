@@ -354,3 +354,31 @@ def lowercase_dict(input_dict):
             return value
 
     return {key.lower(): lowercase_value(value) for key, value in input_dict.items()}
+
+def combine_nodes_single(network_dict, nodes_to_combine):
+    # Create a NetworkX graph from the dictionary
+    G = nx.Graph()
+    for node, neighbors in network_dict.items():
+      for neighbor in neighbors:
+          G.add_edge(node, neighbor)
+
+
+      new_node = list(group)[0].upper()
+      G.add_node(new_node)
+      #next(iter(group)).upper() 
+                                    # Name the new node by concatenating old node names
+                                    # for this to work the new_node needs a new name
+                                    # otherwise when the algorithm checks if its already in
+                                    # the network it will return true
+      for node in group:
+          if node in G:
+              # Add edges from the new node to the neighbors of the old nodes
+              for neighbor in list(G.neighbors(node)):
+                  if neighbor not in group:
+                      G.add_edge(new_node, neighbor)
+              G.remove_node(node)  # Remove the old node
+
+    # Convert back to dictionary format
+    new_network_dict = {node: list(G.neighbors(node)) for node in G.nodes()}
+
+    return new_network_dict
