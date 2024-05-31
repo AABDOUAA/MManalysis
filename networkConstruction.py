@@ -363,18 +363,17 @@ def combine_nodes_single(network_dict, nodes_to_combine):
           G.add_edge(node, neighbor)
 
 
-      new_node = list(group)[0].upper()
-      G.add_node(new_node)
-      #next(iter(group)).upper() 
+      new_node = list(nodes_to_combine)[0].upper()
+      G.add_node(new_node) 
                                     # Name the new node by concatenating old node names
                                     # for this to work the new_node needs a new name
                                     # otherwise when the algorithm checks if its already in
                                     # the network it will return true
-      for node in group:
+      for node in nodes_to_combine:
           if node in G:
               # Add edges from the new node to the neighbors of the old nodes
               for neighbor in list(G.neighbors(node)):
-                  if neighbor not in group:
+                  if neighbor not in nodes_to_combine:
                       G.add_edge(new_node, neighbor)
               G.remove_node(node)  # Remove the old node
 
